@@ -8,23 +8,52 @@ const app = express();
 const port = 3005;
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json())
 
 //Host, user, password database
 const connection = mysql.createConnection({
     host: process.env.host,
     user: process.env.user,
     password: process.env.password,
-    database: process.env.database,
+    database: 'chinook',
 });
 
-app.get('/', (req, res) => {
-    connection.query('SELECT `name` FROM Chinook', (error, results) => {
-        res.send(results);
-    });
+// start #####################__Elliot__##############################
+
+app.listen(port, () => {
+    console.log(`Application is now running on port ${port}`);
 });
-pp.get('/', (req, res) => {
-    connection.query('SELECT `name` FROM Chinook', (error, results) => {
-        res.send(results);f
-    });
+
+// end ##################################################################
+
+
+
+// start #####################__Jazmin__##############################
+
+app.listen(port, () => {
+    console.log(`Application is now running on port ${port}`);
 });
+
+
+
+
+// end ##################################################################
+
+
+
+
+// start #####################__Dont touch!__##############################
+
+app.listen(port, () => {
+    console.log(`Application is now running on port ${port}`);
+});
+
+// end ##################################################################
+
+function test() {
+    connection.query('SELECT `Name` FROM track', (error, results) => {
+        console.log(results);        
+    });
+}
+test()
+
