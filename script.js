@@ -25,6 +25,6 @@ app.get('/', (req, res) => {
 });
 pp.get('/', (req, res) => {
     connection.query('SELECT `name` FROM Chinook', (error, results) => {
-        res.send(results);d
+        res.send(results);
     });
 });
