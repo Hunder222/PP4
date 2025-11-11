@@ -117,7 +117,7 @@ app.get("/api/topsold", (req, res) => {
     LIMIT 10;
   `;
 
-    // 👇 Dette stykke sender resultatet som JSON til frontend
+
     connection.query(query, (error, results) => {
         if (error) return res.status(500).json({ error });
         res.json(results);
