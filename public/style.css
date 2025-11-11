@@ -1,10 +1,10 @@
 *{
-    /*kanter på elementer til visualisere design*/
-    /*  
+    /*  kanter på elementer til visualisere design 
     outline-color: red;
     outline-style: dotted;
     outline-offset: -1px;
     */
+    
 
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
@@ -19,6 +19,8 @@ ul {
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    padding: 0;
+    margin: 0;
 }
 
 a {
@@ -57,14 +59,50 @@ li button:active {
 
 .chartContainer {
     background-color: #bbbbbb;
-    width: 75vw;
+    width: 70vw;
     min-height: 50vh;
     align-content: center;
     justify-self: center;
-    border-radius: 2rem;
-    margin-top: 3rem;
+    border-radius: 2vw;
+    margin-top: 3vh;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
 }
 
 #barChart {
     max-height: 50vh;
+}
+
+
+
+
+
+.horizontalFlex{
+    display: flex;
+
+}
+
+#tableChart {
+    display: flex;
+    flex-direction: column;
+}
+
+.tableItem {
+    display: flex;
+    width: 60vw;
+    flex-direction: row;
+    justify-content: space-between;    
+    border-width: 1px;
+    border-bottom-style: solid;
+    padding-bottom: 2vh;
+    padding-top: 2vh;
+}
+
+.tableItem p {
+    padding-left: 1vw;
+    padding-right: 1vw;
+}
+
+.itemIcon {
+    margin-right: -1vw;
 }

@@ -22,10 +22,35 @@ const connection = mysql.createConnection({
 });
 
 
+
+function getChartData(dataFromQuery) {
+    const chartLabels = [];
+    const chartData = [];
+
+    for (const result in dataFromQuery) {
+        let resultLabel = dataFromQuery[result].Name;
+        let resultData = dataFromQuery[result].Value;
+
+        chartLabels.push(resultLabel);
+        chartData.push(resultData)
+    }
+    console.log(chartLabels);
+    console.log(chartData);
+
+    const dataToReturn = {
+        "queriedLabels": chartLabels,
+        "queriedData": chartData
+    }
+
+    return dataToReturn
+}
+
+
+
+
 app.get('/api/top', (req, res) => {
-        
     connection.query(`
-        SELECT Name, Milliseconds
+        SELECT Name, Milliseconds AS Value
         FROM track
         ORDER BY Milliseconds DESC
         LIMIT 10
@@ -34,32 +59,15 @@ app.get('/api/top', (req, res) => {
         console.log("query results:");
         console.log(results);
 
-        const chartLabels = [];
-        const chartData = [];
-
-        for (const result in results) {
-            let resultLabel = results[result].Name;
-            let resultData = results[result].Milliseconds;
-
-            chartLabels.push(resultLabel);
-            chartData.push(resultData)
-        }
-        console.log(chartLabels);
-        console.log(chartData);
-
-        const dataToReturn = {
-            "labels": chartLabels,
-            "datas": chartData
-        }
+        dataToReturn = getChartData(results)
 
         res.send(dataToReturn)
     });
 })
 
 app.get('/api/genres', (req, res) => {
-        
     connection.query(`
-        SELECT Name, Milliseconds
+        SELECT Name, Milliseconds AS Value
         FROM track
         ORDER BY Milliseconds ASC
         LIMIT 10
@@ -68,32 +76,16 @@ app.get('/api/genres', (req, res) => {
         console.log("query results:");
         console.log(results);
 
-        const chartLabels = [];
-        const chartData = [];
-
-        for (const result in results) {
-            let resultLabel = results[result].Name;
-            let resultData = results[result].Milliseconds;
-
-            chartLabels.push(resultLabel);
-            chartData.push(resultData)
-        }
-        console.log(chartLabels);
-        console.log(chartData);
-
-        const dataToReturn = {
-            "labels": chartLabels,
-            "datas": chartData
-        }
+        dataToReturn = getChartData(results)
 
         res.send(dataToReturn)
     });
 })
 
 app.get('/api/artists', (req, res) => {
-        
+
     connection.query(`
-        SELECT Name, UnitPrice
+        SELECT Name, UnitPrice AS Value
         FROM track
         ORDER BY UnitPrice DESC
         LIMIT 10
@@ -102,32 +94,16 @@ app.get('/api/artists', (req, res) => {
         console.log("query results:");
         console.log(results);
 
-        const chartLabels = [];
-        const chartData = [];
-
-        for (const result in results) {
-            let resultLabel = results[result].Name;
-            let resultData = results[result].UnitPrice;
-
-            chartLabels.push(resultLabel);
-            chartData.push(resultData)
-        }
-        console.log(chartLabels);
-        console.log(chartData);
-
-        const dataToReturn = {
-            "labels": chartLabels,
-            "datas": chartData
-        }
+        dataToReturn = getChartData(results)
 
         res.send(dataToReturn)
     });
 })
 
 app.get('/api/countries', (req, res) => {
-        
+
     connection.query(`
-        SELECT Name, UnitPrice
+        SELECT Name, UnitPrice AS Value
         FROM track
         ORDER BY UnitPrice ASC
         LIMIT 10
@@ -136,23 +112,7 @@ app.get('/api/countries', (req, res) => {
         console.log("query results:");
         console.log(results);
 
-        const chartLabels = [];
-        const chartData = [];
-
-        for (const result in results) {
-            let resultLabel = results[result].Name;
-            let resultData = results[result].UnitPrice;
-
-            chartLabels.push(resultLabel);
-            chartData.push(resultData)
-        }
-        console.log(chartLabels);
-        console.log(chartData);
-
-        const dataToReturn = {
-            "labels": chartLabels,
-            "datas": chartData
-        }
+        dataToReturn = getChartData(results)
 
         res.send(dataToReturn)
     });

@@ -1,45 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
     <title>Chinook Wrapped</title>
 
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
 </head>
+
+<template id="tableItemTemplate">
+    <li class="tableItem">
+        <p class="itemRank">1.</p>
+        <p class="itemText">Lorem Ipsum Dolor Sit Amet</p>
+        <div class="horizontalFlex">
+            <p class="itemIcon" >📈</p>
+            <p class="itemValue">1234</p>
+        </div>
+    </li>
+</template>
+
 <body>
-<header>
-    <nav>
-        <ul>
-            <li>
-                <h1>Chinook Wrapped</h1>
-            </li>
-            <li>
-                <button id="btnTop">Top Songs</button>
-            </li>
-            <li>
-                <button id="btnGenres">Top Genres</button>
-            </li>
-            <li>
-                <button id="btnArtists">Top Artists</button>
-            </li>
-            <li>
-                <button id="btnCountries">Top Countries</button>
-            </li>
-        </ul>
-    </nav>
-</header>
-<main>
-    <div class="chartContainer">
-        <canvas id="barChart"></canvas>
-    </div>
-    <div class="chartContainer">
-        <canvas id="tableChart"></canvas>
-    </div>
-</main>
-<script src="client.js"></script>
+    <header>
+        <nav>
+            <ul>
+                <li>
+                    <h1>Chinook Wrapped</h1>
+                </li>
+                <li>
+                    <button id="btnTop">Top Songs</button>
+                </li>
+                <li>
+                    <button id="btnGenres">Top Genres</button>
+                </li>
+                <li>
+                    <button id="btnArtists">Top Artists</button>
+                </li>
+                <li>
+                    <button id="btnCountries">Top Countries</button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="chartContainer">
+            <canvas id="barChart"></canvas>
+        </div>
+        <div class="chartContainer" >
+            <ul id="tableChart">
+                
+            </ul>
+        </div>
+    </main>
+    <script src="client.js"></script>
 </body>
 </html>
