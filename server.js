@@ -1,3 +1,5 @@
+// _START_ #####################__Elliot__##############################
+
 const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
@@ -18,8 +20,6 @@ const connection = mysql.createConnection({
     password: process.env.password,
     database: 'chinook',
 });
-
-// start #####################__Elliot__##############################
 
 
 app.get('/api/top', (req, res) => {
@@ -56,8 +56,6 @@ app.get('/api/top', (req, res) => {
     });
 })
 
-
-
 app.get('/api/genres', (req, res) => {
         
     connection.query(`
@@ -91,8 +89,6 @@ app.get('/api/genres', (req, res) => {
         res.send(dataToReturn)
     });
 })
-
-
 
 app.get('/api/artists', (req, res) => {
         
@@ -128,9 +124,6 @@ app.get('/api/artists', (req, res) => {
     });
 })
 
-
-
-
 app.get('/api/countries', (req, res) => {
         
     connection.query(`
@@ -164,33 +157,6 @@ app.get('/api/countries', (req, res) => {
         res.send(dataToReturn)
     });
 })
-
-
-
-
-function loadTopSection() {
-    
-}
-
-loadTopSection()
-
-
-
-
-
-// end ###############################################################
-// start #####################__Jazmin__##############################
-
-
-
-
-
-
-// end ###############################################################
-
-
-
-
 
 app.listen(port, () => {
     console.log(`Application is now running on port ${port}`);
