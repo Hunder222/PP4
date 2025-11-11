@@ -15,26 +15,31 @@
     <nav>
         <ul>
             <li>
-                <a href="">Top Songs</a>
+                <h1>Chinook Wrapped</h1>
             </li>
             <li>
-                <a href="">Top Genres</a>
+                <button id="btnTop">Top Songs</button>
             </li>
             <li>
-                <a href="">Top Artists</a>
+                <button id="btnGenres">Top Genres</button>
             </li>
             <li>
-                <a href="">Top Countries</a>
+                <button id="btnArtists">Top Artists</button>
+            </li>
+            <li>
+                <button id="btnCountries">Top Countries</button>
             </li>
         </ul>
     </nav>
 </header>
 <main>
-    <h1>Chinook Wrapped</h1>
-    <div>
-        <canvas id="myChart"></canvas>
+    <div class="chartContainer">
+        <canvas id="barChart"></canvas>
+    </div>
+    <div class="chartContainer">
+        <canvas id="tableChart"></canvas>
     </div>
 </main>
-<script src="script.js"></script>
+<script src="client.js"></script>
 </body>
 </html>

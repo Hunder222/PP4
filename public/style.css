@@ -1,0 +1,70 @@
+*{
+    /*kanter på elementer til visualisere design*/
+    /*  
+    outline-color: red;
+    outline-style: dotted;
+    outline-offset: -1px;
+    */
+
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+
+} 
+
+
+
+
+ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+
+li button {
+    border: none;
+    font-size: 1rem;
+    color: #8888ff;
+    background-color: #535353;
+    border-width: 2rem;
+    border-radius: 1rem;
+    margin: 1rem;
+    padding: 1rem;
+
+    :hover {
+        background-color: #8888ff;
+        color: #535353;
+    }
+}
+
+li button:hover {
+    background-color: #8888ff;
+    color: #535353;
+}
+
+li button:active {
+    background-color: #bbbbee;
+}
+
+.chartContainer {
+    background-color: #bbbbbb;
+    width: 75vw;
+    min-height: 50vh;
+    align-content: center;
+    justify-self: center;
+    border-radius: 2rem;
+    margin-top: 3rem;
+}
+
+#barChart {
+    max-height: 50vh;
+}
