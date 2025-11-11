@@ -98,6 +98,32 @@ app.get("/top10countries", (req, res) => {
     });
 });
 
+app.get("/api/topsold", (req, res) => {
+    const query = `
+    SELECT 
+      t.Name AS Track,
+      ar.Name AS Artist,
+      g.Name AS Genre,
+      SUM(il.Quantity) AS Sold
+    FROM invoiceline il
+    JOIN track t   ON il.TrackId = t.TrackId
+    JOIN album al  ON t.AlbumId = al.AlbumId
+    JOIN artist ar ON al.ArtistId = ar.ArtistId
+    JOIN genre g   ON t.GenreId = g.GenreId
+    WHERE g.Name NOT IN ('TV Shows','Drama','Comedy','Science Fiction','Action & Adventure','Documentary')
+      AND t.MediaTypeId IN (SELECT MediaTypeId FROM mediatype WHERE Name LIKE '%audio%')
+    GROUP BY t.TrackId
+    ORDER BY Sold DESC
+    LIMIT 10;
+  `;
+
+    // 👇 Dette stykke sender resultatet som JSON til frontend
+    connection.query(query, (error, results) => {
+        if (error) return res.status(500).json({ error });
+        res.json(results);
+    });
+});
+
 
 
 
