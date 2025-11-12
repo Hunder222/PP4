@@ -1,4 +1,7 @@
 
+// TODO save queries as json file
+    // TODO add try: when fetching (when theres no nodeJS or sql server)
+
 
 // get chart html containers:
 let barChartCanvas = document.getElementById('barChart').getContext('2d');
@@ -163,6 +166,35 @@ function updateCharts(newLabels, newData, chartType) { // chartType: (top, genre
 
 }
 
+function updateLocalDB(newLabels, newData, chartType){
+
+    try {
+        const oldDbData = fs.readFileSync('/localDB.json')
+        const database = JSON.parse(oldDbData)
+        
+
+
+    } catch (error) {
+        
+    }
+
+    array.forEach(btn => {
+        
+    });
+
+
+
+    if (chartType == 'top') {
+
+    } else if (chartType == 'genres') {
+
+    } else if (chartType == 'artists') {
+        
+    } else if (chartType == 'countries') {
+
+    }
+}
+
 
 function dataFetcher(chartType) {
 
@@ -178,6 +210,7 @@ function dataFetcher(chartType) {
             const chartData = data.queriedData
 
             updateCharts(chartLabels, chartData, chartType)
+            updateLocalDB(chartLabels, chartData, chartType)
         })
         .catch(error => console.error('Error:', error))
 }

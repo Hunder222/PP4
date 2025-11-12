@@ -125,6 +125,105 @@ app.get("/api/topsold", (req, res) => {
 });
 
 
+//10 top genre (salg)
+
+app.get("/api/music_genres", (req, res) => {
+    const query = `
+    SELECT 
+      g.Name AS Genre,
+      ROUND(SUM(il.UnitPrice * il.Quantity), 2) AS Revenue
+    FROM invoiceline il
+    JOIN track t   ON il.TrackId = t.TrackId
+    JOIN genre g   ON t.GenreId = g.GenreId
+    JOIN mediatype m ON t.MediaTypeId = m.MediaTypeId
+    WHERE g.Name NOT IN ('TV Shows','Drama','Comedy','Science Fiction','Action & Adventure','Documentary')
+      AND m.Name LIKE '%audio%'
+    GROUP BY g.GenreId
+    ORDER BY Revenue DESC
+    LIMIT 10;
+  `;
+    connection.query(query, (error, results) => {
+        if (error) return res.status(500).json({ error });
+        res.json(results);
+    });
+});
+
+
+// Top 10 Music Artists (by Revenue)
+
+app.get("/api/music_artists", (req, res) => {
+    const query = `
+    SELECT 
+      ar.Name AS Artist,
+      ROUND(SUM(il.UnitPrice * il.Quantity), 2) AS Revenue
+    FROM invoiceline il
+    JOIN track t   ON il.TrackId = t.TrackId
+    JOIN album al  ON t.AlbumId = al.AlbumId
+    JOIN artist ar ON al.ArtistId = ar.ArtistId
+    JOIN genre g   ON t.GenreId = g.GenreId
+    JOIN mediatype m ON t.MediaTypeId = m.MediaTypeId
+    WHERE g.Name NOT IN ('TV Shows','Drama','Comedy','Science Fiction','Action & Adventure','Documentary')
+      AND m.Name LIKE '%audio%'
+    GROUP BY ar.ArtistId
+    ORDER BY Revenue DESC
+    LIMIT 10;
+  `;
+    connection.query(query, (error, results) => {
+        if (error) return res.status(500).json({ error });
+        res.json(results);
+    });
+});
+
+//Top 10 Music Artists (by Units Sold)
+
+app.get("/api/music_artists_units", (req, res) => {
+    const query = `
+    SELECT 
+      ar.Name AS Artist,
+      SUM(il.Quantity) AS UnitsSold
+    FROM invoiceline il
+    JOIN track t   ON il.TrackId = t.TrackId
+    JOIN album al  ON t.AlbumId = al.AlbumId
+    JOIN artist ar ON al.ArtistId = ar.ArtistId
+    JOIN mediatype m ON t.MediaTypeId = m.MediaTypeId
+    WHERE m.Name LIKE '%audio%'
+    GROUP BY ar.ArtistId
+    ORDER BY UnitsSold DESC
+    LIMIT 10;
+  `;
+    connection.query(query, (error, results) => {
+        if (error) return res.status(500).json({ error });
+        res.json(results);
+    });
+});
+
+//Top 10 Songs (by Units Sold – only Music)
+
+app.get("/api/music_songs_units", (req, res) => {
+    const query = `
+    SELECT 
+      t.Name AS Track,
+      ar.Name AS Artist,
+      g.Name  AS Genre,
+      SUM(il.Quantity) AS UnitsSold
+    FROM invoiceline il
+    JOIN track t   ON il.TrackId = t.TrackId
+    JOIN album al  ON t.AlbumId = al.AlbumId
+    JOIN artist ar ON al.ArtistId = ar.ArtistId
+    JOIN genre g   ON t.GenreId = g.GenreId
+    JOIN mediatype m ON t.MediaTypeId = m.MediaTypeId
+    WHERE g.Name NOT IN ('TV Shows','Drama','Comedy','Science Fiction','Action & Adventure','Documentary')
+      AND m.Name LIKE '%audio%'
+    GROUP BY t.TrackId
+    ORDER BY UnitsSold DESC
+    LIMIT 10;
+  `;
+    connection.query(query, (error, results) => {
+        if (error) return res.status(500).json({ error });
+        res.json(results);
+    });
+});
+
 
 
 
