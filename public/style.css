@@ -4,15 +4,26 @@
     outline-style: dotted;
     outline-offset: -1px;
     */
-    
+
 
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
 
-} 
+}
+body{
+    background-color: hsl(210, 10%, 70%);
 
+}
 
-
+.backgroundImg{
+    position: fixed;
+    background-image: url("assets/portfolio-BG.svg");
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    z-index: -2;
+    transition: filter 0.3s linear;
+}
 
 ul {
     display: flex;
@@ -35,7 +46,7 @@ li {
 li button {
     border: none;
     font-size: 1rem;
-    color: #8888ff;
+    color: hsla(0, 5%, 80%, 0.80);
     background-color: #535353;
     border-width: 2rem;
     border-radius: 1rem;
@@ -58,7 +69,8 @@ li button:active {
 }
 
 .chartContainer {
-    background-color: #bbbbbb;
+    background-color: rgba(83, 83, 83, 0.8);
+
     width: 70vw;
     min-height: 50vh;
     align-content: center;
@@ -96,6 +108,7 @@ li button:active {
     border-bottom-style: solid;
     padding-bottom: 2vh;
     padding-top: 2vh;
+    color:hsl(0, 5%, 75%) ;
 }
 
 .tableItem p {
@@ -107,3 +120,28 @@ li button:active {
     margin-right: -1vw;
 }
 
+#titil1 h1 {
+display: flex;
+    justify-content: center;
+    color:hsla(0, 5%, 75%, 0.75)
+
+}
+
+#titil1{
+    display: flex;
+    justify-content: center;
+    justify-self: center;
+    background-color: #535353;
+    width: 70vw;
+    border-radius: 2vw;
+    padding-top:2vh ;
+    padding-bottom: 2vh;
+    font-size: 4vh;
+    font-style: italic;
+
+    color: hsl(0,0%,45%)
+
+}
+#titel_texst{
+    color:hsla(0, 5%, 75%, 0.75);
+}
