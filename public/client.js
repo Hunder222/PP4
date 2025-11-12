@@ -53,8 +53,14 @@ let barChart = new Chart(barChartCanvas, {
                 right: 100
             }
         },
-        scales: { // the following code solves an issue where overflow from long labels push the charts padding/margin
-            x: { 
+        scales: {
+            // Indstillinger for X-aksen
+            x: {
+                // Tilføjet farveindstillinger for grid
+                grid: {
+                    color: 'hsla(0, 5%, 75%, 0.75)', // Grid-linjer (let gennemsigtig hvid)
+                    borderColor: 'hsla(0, 5%, 75%,0.75)' // Akse linjen
+                },
                 ticks: {
                     // Tilføjet farveindstilling for labels (teksten)
                     color: 'hsla(0, 5%, 75%,1)',
@@ -96,7 +102,6 @@ function updateCharts(newLabels, newData, chartType) { // chartType: (topSongs, 
     let chartColor;
 
     // alle knapper sort bg
-    //
     const allNavButtons = document.querySelectorAll("button")
     allNavButtons.forEach(btn=>{
         btn.style.backgroundColor = "#535353"
@@ -104,20 +109,28 @@ function updateCharts(newLabels, newData, chartType) { // chartType: (topSongs, 
 
     if (chartType === 'topSongs') {
         chartTitle = "Top 10 Songs"
-        chartColor = 'rgba(54, 162, 235, 0.6)'
-        btnTop.style.backgroundColor=chartColor
-    } else if (chartType === 'genres') {
+        chartColor = 'rgba(54, 162, 235, 0.9)'
+        btnSongs.style.backgroundColor=chartColor
+        titel1.style.backgroundColor=chartColor
+        backgroundElement.style.filter = `hue-rotate(0deg)`;
+    } else if (chartType === 'topGenres') {
         chartTitle = "Top 10 Genres"
-        chartColor = 'rgba(75, 192, 192, 0.6)'
+        chartColor = 'rgba(75, 192, 192, 0.9)'
         btnGenres.style.backgroundColor=chartColor
-    } else if (chartType === 'artists') {
+        titel1.style.backgroundColor=chartColor
+        backgroundElement.style.filter = `hue-rotate(-45deg)`;
+    } else if (chartType === 'topArtists') {
         chartTitle = "Top 10 Artists"
-        chartColor = 'rgba(153, 102, 255, 0.6)'
+        chartColor = 'rgba(153, 102, 255, 0.9)'
         btnArtists.style.backgroundColor=chartColor
-    } else if (chartType === 'countries') {
+        titel1.style.backgroundColor=chartColor
+        backgroundElement.style.filter = `hue-rotate(50deg)`;
+    } else if (chartType === 'topCountries') {
         chartTitle = "Top 10 Countries"
-        chartColor = 'rgba(255, 159, 64, 0.6)'
+        chartColor = 'rgba(255, 159, 64, 0.9)'
         btnCountries.style.backgroundColor=chartColor
+        titel1.style.backgroundColor=chartColor
+        backgroundElement.style.filter = `hue-rotate(180deg)`;
     }
 
     // update barChart data and options:
@@ -144,11 +157,8 @@ function updateCharts(newLabels, newData, chartType) { // chartType: (topSongs, 
         newItem.querySelector('.itemText').textContent = newLabels[i]
         newItem.querySelector('.itemValue').textContent = newData[i]
 
-
         tableChartContainer.appendChild(newItem)
     }
-
-
 }
 
 
@@ -168,7 +178,7 @@ function dataFetcher(chartType) {
         .catch(error => console.error('Error:', error))
 }
 
-// load top 10 chart on site init:
+// load top songs chart on site init:
 dataFetcher('topSongs')
 
 
@@ -188,8 +198,5 @@ btnArtists.addEventListener('click', () => {
 btnCountries.addEventListener('click', () => {
     dataFetcher('topCountries')
 });
-
-const titel= document.querySelector('#titil1')
-
 
 
