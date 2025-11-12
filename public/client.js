@@ -86,18 +86,30 @@ function updateCharts(newLabels, newData, chartType) { // chartType: (top, genre
     let chartTitle;
     let chartColor;
 
-    if (chartType == 'top') {
+    // alle knapper sort bg
+    //
+    const allNavButtons = document.querySelectorAll("button")
+    allNavButtons.forEach(btn=>{
+        btn.style.backgroundColor = "#535353"
+    })
+
+    if (chartType === 'top') {
         chartTitle = "Top 10 Songs"
         chartColor = 'rgba(54, 162, 235, 0.6)'
-    } else if (chartType == 'genres') {
+        // btnTop.style.s
+        btnTop.style.backgroundColor=chartColor
+    } else if (chartType === 'genres') {
         chartTitle = "Top 10 Genres"
         chartColor = 'rgba(75, 192, 192, 0.6)'
-    } else if (chartType == 'artists') {
+        btnGenres.style.backgroundColor=chartColor
+    } else if (chartType === 'artists') {
         chartTitle = "Top 10 Artists"
         chartColor = 'rgba(153, 102, 255, 0.6)'
-    } else if (chartType == 'countries') {
+        btnArtists.style.backgroundColor=chartColor
+    } else if (chartType === 'countries') {
         chartTitle = "Top 10 Countries"
         chartColor = 'rgba(255, 159, 64, 0.6)'
+        btnCountries.style.backgroundColor=chartColor
     }
 
     // update barChart data and options:
@@ -127,6 +139,8 @@ function updateCharts(newLabels, newData, chartType) { // chartType: (top, genre
 
         tableChartContainer.appendChild(newItem)
     }
+
+
 }
 
 
