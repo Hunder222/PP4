@@ -1,6 +1,6 @@
 
 // TODO save queries as json file
-    // TODO add try: when fetching (when theres no nodeJS or sql server)
+// TODO add try: when fetching (when theres no nodeJS or sql server)
 
 
 // get chart html containers:
@@ -11,7 +11,7 @@ let tableChartContainer = document.getElementById('tableChart');
 let tableItemTemplate = document.getElementById('tableItemTemplate')
 
 // get html buttons:
-let btnTop = document.getElementById('btnTop')
+let btnSongs = document.getElementById('btnSongs')
 let btnGenres = document.getElementById('btnGenres')
 let btnArtists = document.getElementById('btnArtists')
 let btnCountries = document.getElementById('btnCountries')
@@ -57,7 +57,7 @@ let barChart = new Chart(barChartCanvas, {
             }
         },
         scales: { // the following code solves an issue where overflow from long labels push the charts padding/margin
-            x: { 
+            x: {
                 ticks: {
                     // The callback function to find and edit long labels
                     // scales > x > ticks, is calling this callback function, for each label, data, etc being rendered on the chart
@@ -83,7 +83,7 @@ let barChart = new Chart(barChartCanvas, {
 
 
 
-function updateCharts(newLabels, newData, chartType) { // chartType: (top, genres, artists, countries), for using correct styles.
+function updateCharts(newLabels, newData, chartType) { // chartType: (topSongs, topGenres, topArtists, topCountries), for using correct styles.
 
     // chart type specific settings:
     let chartTitle;
@@ -92,27 +92,27 @@ function updateCharts(newLabels, newData, chartType) { // chartType: (top, genre
     // alle knapper sort bg
     //
     const allNavButtons = document.querySelectorAll("button")
-    allNavButtons.forEach(btn=>{
+    allNavButtons.forEach(btn => {
         btn.style.backgroundColor = "#535353"
     })
 
-    if (chartType === 'top') {
+    if (chartType === 'topSongs') {
         chartTitle = "Top 10 Songs"
         chartColor = 'rgba(54, 162, 235, 0.6)'
-        // btnTop.style.s
-        btnTop.style.backgroundColor=chartColor
-    } else if (chartType === 'genres') {
+        // btnSongs.style.s
+        btnSongs.style.backgroundColor = chartColor
+    } else if (chartType === 'topGenres') {
         chartTitle = "Top 10 Genres"
         chartColor = 'rgba(75, 192, 192, 0.6)'
-        btnGenres.style.backgroundColor=chartColor
-    } else if (chartType === 'artists') {
+        btnGenres.style.backgroundColor = chartColor
+    } else if (chartType === 'topArtists') {
         chartTitle = "Top 10 Artists"
         chartColor = 'rgba(153, 102, 255, 0.6)'
-        btnArtists.style.backgroundColor=chartColor
-    } else if (chartType === 'countries') {
+        btnArtists.style.backgroundColor = chartColor
+    } else if (chartType === 'topCountries') {
         chartTitle = "Top 10 Countries"
         chartColor = 'rgba(255, 159, 64, 0.6)'
-        btnCountries.style.backgroundColor=chartColor
+        btnCountries.style.backgroundColor = chartColor
     }
 
     // update barChart data and options:
@@ -131,7 +131,7 @@ function updateCharts(newLabels, newData, chartType) { // chartType: (top, genre
 
     for (let i = 0; i < newLabels.length; i++) {
 
-        // make a new copy of li template
+        // makes a new copy of li template
         const newItem = tableItemTemplate.content.cloneNode(true);
 
         // change values and text in template
@@ -146,77 +146,42 @@ function updateCharts(newLabels, newData, chartType) { // chartType: (top, genre
 
 }
 
-function updateLocalDB(newLabels, newData, chartType){
 
-    try {
-        const oldDbData = fs.readFileSync('/localDB.json')
-        const database = JSON.parse(oldDbData)
-        
-
-
-    } catch (error) {
-        
-    }
-
-    array.forEach(btn => {
-        
-    });
-
-
-
-    if (chartType == 'top') {
-
-    } else if (chartType == 'genres') {
-
-    } else if (chartType == 'artists') {
-        
-    } else if (chartType == 'countries') {
-
-    }
-}
 
 
 function dataFetcher(chartType) {
-
+    
     const endpoint = '/api/' + chartType
 
     fetch(endpoint)
         .then(response => response.json())
         .then(data => {
-
-            console.log(`Got data from query ${chartType}:`, data);
-
             const chartLabels = data.queriedLabels
             const chartData = data.queriedData
 
             updateCharts(chartLabels, chartData, chartType)
-            updateLocalDB(chartLabels, chartData, chartType)
         })
         .catch(error => console.error('Error:', error))
 }
 
 // load top 10 chart on site init:
-dataFetcher('top')
+dataFetcher('topSongs')
 
 
 // button event listeners:
-btnTop.addEventListener('click', () => {
-    console.log("btnTop pressed!");
-    dataFetcher('top')
+btnSongs.addEventListener('click', () => {
+    dataFetcher('topSongs')
 });
 
 btnGenres.addEventListener('click', () => {
-    console.log("btnGenres pressed!");
-    dataFetcher('genres')
+    dataFetcher('topGenres')
 });
 
 btnArtists.addEventListener('click', () => {
-    console.log("btnArtists pressed!");
-    dataFetcher('artists')
+    dataFetcher('topArtists')
 });
 
 btnCountries.addEventListener('click', () => {
-    console.log("btnCountries pressed!");
-    dataFetcher('countries')
+    dataFetcher('topCountries')
 });
 
