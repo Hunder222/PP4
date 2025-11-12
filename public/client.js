@@ -15,6 +15,12 @@ let btnSongs = document.getElementById('btnSongs')
 let btnGenres = document.getElementById('btnGenres')
 let btnArtists = document.getElementById('btnArtists')
 let btnCountries = document.getElementById('btnCountries')
+const allNavButtons = document.querySelectorAll("button")
+
+
+const titel1= document.querySelector('#titil1')
+
+const backgroundElement = document.querySelector('.backgroundImg');
 
 
 
@@ -26,22 +32,13 @@ let barChart = new Chart(barChartCanvas, {
             label: '', // edited by updateCharts
             data: [], // edited by updateCharts
             backgroundColor: '', // edited by updateCharts
-            borderWidth: 2,
-            borderColor: '#aaa',
+            borderWidth: 0,
             hoverBorderWidth: 3,
             hoverBorderColor: '#ccc'
         }]
     },
     options: {
         plugins: {
-            title: {
-                display: true,
-                text: 'test',
-                position: 'top',
-                font: {
-                    size: 25
-                }
-            },
             legend: {
                 display: false,
                 position: 'bottom',
@@ -57,24 +54,33 @@ let barChart = new Chart(barChartCanvas, {
             }
         },
         scales: { // the following code solves an issue where overflow from long labels push the charts padding/margin
-            x: {
+            x: { 
                 ticks: {
-                    // The callback function to find and edit long labels
-                    // scales > x > ticks, is calling this callback function, for each label, data, etc being rendered on the chart
+                    // Tilføjet farveindstilling for labels (teksten)
+                    color: 'hsla(0, 5%, 75%,1)',
+
+                    // Din eksisterende callback-funktion for lange labels
                     callback: function (value) {
-                        // get label
                         const label = this.getLabelForValue(value);
+                        const maxLength = 20;
 
-                        const maxLength = 20; // max allowed label string length
-
-                        // if string label is too long, replace ending with ... 
                         if (label.length > maxLength) {
-                            // .substring method slices out an select part of a string 
                             return label.substring(0, maxLength) + '...';
                         } else {
                             return label;
                         }
                     }
+                }
+            },
+
+            // Tilføjet Y-aksen for at indstille farver der også
+            y: {
+                grid: {
+                    color: 'hsl(0, 5%, 75%)', // Grid-linjer (let gennemsigtig hvid)
+                    borderColor:'hsl(0, 5%, 75%)'// Akse linjen
+                },
+                ticks: {
+                    color: 'hsl(0, 5%, 75%)' // Labels på Y-aksen
                 }
             }
         }
@@ -92,27 +98,26 @@ function updateCharts(newLabels, newData, chartType) { // chartType: (topSongs, 
     // alle knapper sort bg
     //
     const allNavButtons = document.querySelectorAll("button")
-    allNavButtons.forEach(btn => {
+    allNavButtons.forEach(btn=>{
         btn.style.backgroundColor = "#535353"
     })
 
     if (chartType === 'topSongs') {
         chartTitle = "Top 10 Songs"
         chartColor = 'rgba(54, 162, 235, 0.6)'
-        // btnSongs.style.s
-        btnSongs.style.backgroundColor = chartColor
-    } else if (chartType === 'topGenres') {
+        btnTop.style.backgroundColor=chartColor
+    } else if (chartType === 'genres') {
         chartTitle = "Top 10 Genres"
         chartColor = 'rgba(75, 192, 192, 0.6)'
-        btnGenres.style.backgroundColor = chartColor
-    } else if (chartType === 'topArtists') {
+        btnGenres.style.backgroundColor=chartColor
+    } else if (chartType === 'artists') {
         chartTitle = "Top 10 Artists"
         chartColor = 'rgba(153, 102, 255, 0.6)'
-        btnArtists.style.backgroundColor = chartColor
-    } else if (chartType === 'topCountries') {
+        btnArtists.style.backgroundColor=chartColor
+    } else if (chartType === 'countries') {
         chartTitle = "Top 10 Countries"
         chartColor = 'rgba(255, 159, 64, 0.6)'
-        btnCountries.style.backgroundColor = chartColor
+        btnCountries.style.backgroundColor=chartColor
     }
 
     // update barChart data and options:
@@ -120,7 +125,7 @@ function updateCharts(newLabels, newData, chartType) { // chartType: (topSongs, 
     barChart.data.datasets[0].data = newData
     barChart.data.datasets[0].label = chartTitle
     barChart.data.datasets[0].backgroundColor = chartColor
-    barChart.options.plugins.title.text = chartTitle;
+    titel1.innerText=chartTitle
 
     barChart.update()
 
@@ -145,7 +150,6 @@ function updateCharts(newLabels, newData, chartType) { // chartType: (topSongs, 
 
 
 }
-
 
 
 
@@ -184,4 +188,8 @@ btnArtists.addEventListener('click', () => {
 btnCountries.addEventListener('click', () => {
     dataFetcher('topCountries')
 });
+
+const titel= document.querySelector('#titil1')
+
+
 
