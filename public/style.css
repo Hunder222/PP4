@@ -11,7 +11,7 @@
 
 }
 body{
-    background-color: hsl(210, 10%, 70%);
+    background-color: hsl(217, 0%, 15%);
 
 }
 
@@ -144,4 +144,8 @@ display: flex;
 }
 #titel_texst{
     color:hsla(0, 5%, 75%, 0.75);
+}
+header h1{
+
+    color: white;
 }

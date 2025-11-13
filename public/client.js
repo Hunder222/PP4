@@ -22,6 +22,8 @@ const titel1= document.querySelector('#titil1')
 
 const backgroundElement = document.querySelector('.backgroundImg');
 
+//  colors
+const chartLabelgrid = 'hsla(0, 5%, 75%,0.75)'
 
 
 let barChart = new Chart(barChartCanvas, {
@@ -58,12 +60,12 @@ let barChart = new Chart(barChartCanvas, {
             x: {
                 // Tilføjet farveindstillinger for grid
                 grid: {
-                    color: 'hsla(0, 5%, 75%, 0.75)', // Grid-linjer (let gennemsigtig hvid)
-                    borderColor: 'hsla(0, 5%, 75%,0.75)' // Akse linjen
+                    color: chartLabelgrid, // Grid-linjer (let gennemsigtig hvid)
+                    borderColor: chartLabelgrid // Akse linjen
                 },
                 ticks: {
                     // Tilføjet farveindstilling for labels (teksten)
-                    color: 'hsla(0, 5%, 75%,1)',
+                    color: chartLabelgrid,
 
                     // Din eksisterende callback-funktion for lange labels
                     callback: function (value) {
@@ -82,11 +84,11 @@ let barChart = new Chart(barChartCanvas, {
             // Tilføjet Y-aksen for at indstille farver der også
             y: {
                 grid: {
-                    color: 'hsl(0, 5%, 75%)', // Grid-linjer (let gennemsigtig hvid)
-                    borderColor:'hsl(0, 5%, 75%)'// Akse linjen
+                    color: chartLabelgrid, // Grid-linjer (let gennemsigtig hvid)
+                    borderColor:chartLabelgrid// Akse linjen
                 },
                 ticks: {
-                    color: 'hsl(0, 5%, 75%)' // Labels på Y-aksen
+                    color: chartLabelgrid // Labels på Y-aksen
                 }
             }
         }
