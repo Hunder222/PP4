@@ -25,7 +25,7 @@ const backgroundElement = document.querySelector('.backgroundImg');
 const chartLabelgrid = 'hsla(0, 5%, 75%,0.75)'
 
 
-let barChart = new Chart(barChartCanvas, {
+let barChart = new Chart(barChartCanvas,{
     type: 'bar',
     data: {
         labels: [], // edited by updateCharts
@@ -111,26 +111,26 @@ function updateCharts(newLabels, newData, chartType) { // chartType: (topSongs, 
     if (chartType === 'topSongs') {
         chartTitle = "Top 10 Songs"
         chartColor = 'rgba(54, 162, 235, 0.9)'
-        btnSongs.style.backgroundColor = chartColor
-        titel1.style.backgroundColor = chartColor
+        btnSongs.style.backgroundColor=chartColor
+        titel1.style.backgroundColor=chartColor
         backgroundElement.style.filter = `hue-rotate(0deg)`;
     } else if (chartType === 'topGenres') {
         chartTitle = "Top 10 Genres"
         chartColor = 'rgba(75, 192, 192, 0.9)'
-        btnGenres.style.backgroundColor = chartColor
-        titel1.style.backgroundColor = chartColor
+        btnGenres.style.backgroundColor=chartColor
+        titel1.style.backgroundColor=chartColor
         backgroundElement.style.filter = `hue-rotate(-45deg)`;
     } else if (chartType === 'topArtists') {
         chartTitle = "Top 10 Artists"
         chartColor = 'rgba(153, 102, 255, 0.9)'
-        btnArtists.style.backgroundColor = chartColor
-        titel1.style.backgroundColor = chartColor
+        btnArtists.style.backgroundColor=chartColor
+        titel1.style.backgroundColor=chartColor
         backgroundElement.style.filter = `hue-rotate(50deg)`;
     } else if (chartType === 'topCountries') {
         chartTitle = "Top 10 Countries"
         chartColor = 'rgba(255, 159, 64, 0.9)'
-        btnCountries.style.backgroundColor = chartColor
-        titel1.style.backgroundColor = chartColor
+        btnCountries.style.backgroundColor=chartColor
+        titel1.style.backgroundColor=chartColor
         backgroundElement.style.filter = `hue-rotate(180deg)`;
     }
 
@@ -210,5 +210,8 @@ btnArtists.addEventListener('click', () => {
 btnCountries.addEventListener('click', () => {
     dataFetcher('topCountries')
 });
+
+
+
 
 
