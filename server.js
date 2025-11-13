@@ -30,7 +30,7 @@ const connection = mysql.createConnection({
 // returns json with arrays: queriedLabels[] and queriedData[].
 function getChartData(dataFromQuery) {
     const chartLabels = [];
-    const chartData = [];    
+    const chartData = [];
 
     for (const result in dataFromQuery) {
         let resultLabel = dataFromQuery[result].label;
@@ -44,27 +44,32 @@ function getChartData(dataFromQuery) {
         "queriedLabels": chartLabels,
         "queriedData": chartData
     }
-    
+
     return dataToReturn
 }
 
 
 // this function solves the github pages hosted = no server or database issue.
-// save the latest results from each of the sql database queries, to a local json database, that client.js can use when it cant fetch to the nodeJS/mysql2 server.
+// save the latest results from each of the sql databaase queries, to a local js obj database, that client.js can require when it cant fetch to the nodeJS/mysql2 server.
 // async function because the fetchimg function should not wait for this to finnish before handing data over to the client.
 async function updateLocalDB(chartType, newData) {
 
-    const pathToPublic = path.join(__dirname, 'public')
+    const pathToLocalDB = path.join(__dirname, 'public', 'localDB.js');
 
-    const oldDbData = await fs.readFile(pathToPublic+'/localDB.json')
-    const databaseJSON = JSON.parse(oldDbData)
-    
-    databaseJSON[chartType].labels = newData.queriedLabels
-    databaseJSON[chartType].data = newData.queriedData
+    // load old database as js obj
+    delete require.cache[require.resolve(pathToLocalDB)];
+    const databaseObj = require(pathToLocalDB);
 
-    const newDatabase = JSON.stringify(databaseJSON, null, 4) // null (no replace ¯\_(ツ)_/¯ ), 4 (4 spaces = 1 tab) 
+    // update database obj
+    databaseObj[chartType].labels = newData.queriedLabels;
+    databaseObj[chartType].data = newData.queriedData;
 
-    await fs.writeFile(pathToPublic+'/localDB.json', newDatabase)
+    // add the required code to make it readable as an .js file with an obj to require next time 
+        // null (no replace ¯\_(ツ)_/¯ ), 4 (4 spaces = 1 tab) 
+    const newDatabase = `const localDatabase = ${JSON.stringify(databaseObj, null, 4)};
+        if (typeof module !== 'undefined') module.exports = localDatabase;`;
+
+    await fs.writeFile(pathToLocalDB, newDatabase);
 }
 
 
@@ -79,7 +84,7 @@ function queueDbUpdate(chartType, newData) {
 }
 
 
-// __________ Endpoint queries __________
+// ____________________ Endpoint queries ____________________
 // all queries returns 'label' and 'data'. used for chartJS
 
 app.get('/api/topGenres', (req, res) => {
