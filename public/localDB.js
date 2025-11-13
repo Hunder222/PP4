@@ -1,6 +1,6 @@
 const localDatabase = {
-    topSongs: {
-        labels: [
+    "topSongs": {
+        "labels": [
             "Snowblind",
             "Por Causa De Você",
             "Inject The Venom",
@@ -12,7 +12,7 @@ const localDatabase = {
             "Deuces Are Wild",
             "Overdose"
         ],
-        data: [
+        "data": [
             "2",
             "2",
             "2",
@@ -25,8 +25,8 @@ const localDatabase = {
             "2"
         ]
     },
-    topGenres: {
-        labels: [
+    "topGenres": {
+        "labels": [
             "É Uma Partida De Futebol",
             "Now Sports",
             "A Statistic",
@@ -38,7 +38,7 @@ const localDatabase = {
             "Casinha Feliz",
             "Mateus Enter"
         ],
-        data: [
+        "data": [
             1071,
             4884,
             6373,
@@ -51,8 +51,8 @@ const localDatabase = {
             33149
         ]
     },
-    topArtists: {
-        labels: [
+    "topArtists": {
+        "labels": [
             "Exodus, Pt. 2",
             "The Passage",
             "A Measure of Salvation",
@@ -64,7 +64,7 @@ const localDatabase = {
             "Occupation / Precipice",
             "Battlestar Galactica: The Story So Far"
         ],
-        data: [
+        "data": [
             "1.99",
             "1.99",
             "1.99",
@@ -77,8 +77,8 @@ const localDatabase = {
             "1.99"
         ]
     },
-    topCountries: {
-        labels: [
+    "topCountries": {
+        "labels": [
             "USA",
             "Canada",
             "Brazil",
@@ -90,7 +90,7 @@ const localDatabase = {
             "India",
             "Austria"
         ],
-        data: [
+        "data": [
             493,
             304,
             190,
@@ -104,5 +104,4 @@ const localDatabase = {
         ]
     }
 };
-
-if (typeof module !== 'undefined') module.exports = localDatabase;
+        if (typeof module !== 'undefined') module.exports = localDatabase;
