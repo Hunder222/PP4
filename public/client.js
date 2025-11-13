@@ -20,6 +20,7 @@ const allNavButtons = document.querySelectorAll("button")
 const titel1 = document.querySelector('#titil1')
 
 const backgroundElement = document.querySelector('.backgroundImg');
+const logoElement=document.getElementById("logo")
 
 //  colors
 const chartLabelgrid = 'hsla(0, 5%, 75%,0.75)'
@@ -39,6 +40,32 @@ let barChart = new Chart(barChartCanvas,{
         }]
     },
     options: {
+        transitions: {
+            active: {
+                animation: {
+                    duration: 300, // 0.3s (in milliseconds)
+                    easing: 'linear'
+                }
+            }
+        },
+
+            // ... andre indstillinger ...
+            maintainAspectRatio: false,
+
+            layout: {
+                padding: {
+                    top: 1,
+                    bottom: 1,
+                    left: 50,
+                    right: 10
+                }
+
+
+            },
+
+
+
+
         plugins: {
             legend: {
                 display: false,
@@ -63,7 +90,8 @@ let barChart = new Chart(barChartCanvas,{
                     borderColor: chartLabelgrid // Akse linjen
                 },
                 ticks: {
-                    // Tilføjet farveindstilling for labels (teksten)
+                    maxRotation: 45,
+                    minRotation: 45,
                     color: chartLabelgrid,
 
                     // Din eksisterende callback-funktion for lange labels
@@ -113,25 +141,29 @@ function updateCharts(newLabels, newData, chartType) { // chartType: (topSongs, 
         chartColor = 'rgba(54, 162, 235, 0.9)'
         btnSongs.style.backgroundColor=chartColor
         titel1.style.backgroundColor=chartColor
-        backgroundElement.style.filter = `hue-rotate(0deg)`;
+        backgroundElement.style.filter = `hue-rotate(0deg)`
+        logoElement.style.filter =`hue-rotate(0deg)`;
     } else if (chartType === 'topGenres') {
         chartTitle = "Top 10 Genres"
         chartColor = 'rgba(75, 192, 192, 0.9)'
         btnGenres.style.backgroundColor=chartColor
         titel1.style.backgroundColor=chartColor
-        backgroundElement.style.filter = `hue-rotate(-45deg)`;
+        backgroundElement.style.filter = `hue-rotate(-45deg)`
+        logoElement.style.filter =`hue-rotate(-45deg)`;
     } else if (chartType === 'topArtists') {
         chartTitle = "Top 10 Artists"
         chartColor = 'rgba(153, 102, 255, 0.9)'
         btnArtists.style.backgroundColor=chartColor
         titel1.style.backgroundColor=chartColor
-        backgroundElement.style.filter = `hue-rotate(50deg)`;
+        backgroundElement.style.filter = `hue-rotate(50deg)`
+        logoElement.style.filter =`hue-rotate(50deg)`;
     } else if (chartType === 'topCountries') {
         chartTitle = "Top 10 Countries"
         chartColor = 'rgba(255, 159, 64, 0.9)'
         btnCountries.style.backgroundColor=chartColor
         titel1.style.backgroundColor=chartColor
-        backgroundElement.style.filter = `hue-rotate(180deg)`;
+        backgroundElement.style.filter = `hue-rotate(180deg)`
+        logoElement.style.filter =`hue-rotate(180deg)`;
     }
 
     // update barChart data and options:
@@ -140,6 +172,48 @@ function updateCharts(newLabels, newData, chartType) { // chartType: (topSongs, 
     barChart.data.datasets[0].label = chartTitle
     barChart.data.datasets[0].backgroundColor = chartColor
     titel1.innerText = chartTitle
+
+    const MOBILE_BREAKPOINT = 1000;
+
+
+    const isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
+
+
+    if (isMobile) {
+
+        barChart.options.layout.padding.left = 20;
+        barChart.options.layout.padding.right = 20;
+
+
+
+
+
+        barChart.options.scales.y.ticks.maxRotation = 20;
+        barChart.options.scales.y.ticks.minRotation = 20;
+        barChart.options.scales.y.ticks.autoSkip = false;
+
+
+
+
+
+
+
+
+        barChart.options.scales.x.ticks.maxRotation = 45;
+        barChart.options.scales.x.ticks.minRotation = 45;
+        barChart.options.scales.x.ticks.autoSkip = false;
+
+    } else {
+
+        barChart.options.layout.padding.left = 100;
+        barChart.options.layout.padding.right = 100;
+
+        barChart.options.scales.x.ticks.maxRotation = 0;
+        barChart.options.scales.x.ticks.minRotation = 0;
+        barChart.options.scales.x.ticks.autoSkip = true;
+    }
+
+
 
     barChart.update()
 
@@ -209,6 +283,17 @@ btnArtists.addEventListener('click', () => {
 
 btnCountries.addEventListener('click', () => {
     dataFetcher('topCountries')
+
+
+// resize for mobil
+
+    window.addEventListener('resize', () => {
+
+
+        if (barChart) barChart.update();
+    });
+
+
 });
 
 

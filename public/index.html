@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 
 <template id="tableItemTemplate">
@@ -27,10 +28,12 @@
 <body>
 <div class="backgroundImg"></div>
     <header>
+
         <nav>
             <ul>
                 <li>
-                    <img src="assets/chinook-logo.svg" alt="">
+
+                    <img id="logo" src="assets/chinook-logo.svg">
                 </li>
                 <li>
                     <button id="btnSongs">Top Songs</button>
@@ -53,13 +56,14 @@
             </section>
 
     </header>
+
     <main>
         <div class="chartContainer">
             <canvas id="barChart"></canvas>
         </div>
-        <div class="chartContainer" >
+
+        <div class="tableContainer" >
             <ul id="tableChart">
-                
             </ul>
         </div>
     </main>

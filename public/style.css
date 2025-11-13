@@ -1,21 +1,29 @@
-*{
-    /*  kanter på elementer til visualisere design 
+* {
+    /* kanter på elementer til visualisere design
     outline-color: red;
     outline-style: dotted;
     outline-offset: -1px;
     */
-
+    scroll-behavior: smooth;
 
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
 
 }
-body{
+
+body {
     background-color: hsl(217, 0%, 15%);
 
 }
 
-.backgroundImg{
+header nav ul li img {
+    width: 20vw;
+
+    height: auto;
+    transition: filter 0.3s linear;
+}
+
+.backgroundImg {
     position: fixed;
     background-image: url("assets/chinook-BG-01.svg");
     background-size: cover;
@@ -52,13 +60,10 @@ li button {
     border-radius: 1rem;
     margin: 1rem;
     padding: 1rem;
-
-
-}
-
-li button:hover {
+    transition: background-color 0.3s linear;
 
 }
+
 
 li button:active {
     background-color: #bbbbee;
@@ -73,19 +78,33 @@ li button:active {
     justify-self: center;
     border-radius: 2vw;
     margin-top: 3vh;
-    padding-top: 1vh;
-    padding-bottom: 1vh;
+    padding-top: 3vh;
+    padding-bottom: 3vh;
+}
+
+
+
+
+.tableContainer{
+    background-color: rgba(83, 83, 83, 0.8);
+
+    width: 70vw;
+    min-height: 50vh;
+    align-content: center;
+    justify-self: center;
+    border-radius: 2vw;
+    margin-top: 3vh;
+    padding-top: 3vh;
+    padding-bottom: 3vh;
 }
 
 #barChart {
     max-height: 50vh;
+
 }
 
 
-
-
-
-.horizontalFlex{
+.horizontalFlex {
     display: flex;
 
 }
@@ -99,12 +118,12 @@ li button:active {
     display: flex;
     width: 60vw;
     flex-direction: row;
-    justify-content: space-between;    
+    justify-content: space-between;
     border-width: 1px;
     border-bottom-style: solid;
     padding-bottom: 2vh;
     padding-top: 2vh;
-    color:hsl(0, 5%, 75%) ;
+    color: hsl(0, 5%, 75%);
 }
 
 .tableItem p {
@@ -117,31 +136,141 @@ li button:active {
 }
 
 #titil1 h1 {
-display: flex;
+    display: flex;
     justify-content: center;
-    color:hsla(0, 5%, 85%, 0.75)
+    color: hsla(0, 5%, 85%, 0.75)
 
 }
 
-#titil1{
+#titil1 {
     display: flex;
     justify-content: center;
     justify-self: center;
     background-color: #535353;
     width: 70vw;
     border-radius: 2vw;
-    padding-top:2vh ;
+    padding-top: 2vh;
     padding-bottom: 2vh;
     font-size: 4vh;
     font-style: italic;
 
     color: hsla(0, 5%, 100%, 0.80);
+    transition: background-color 0.3s linear;
+}
 
+#titel_texst {
+    color: hsla(0, 5%, 75%, 0.75);
 }
-#titel_texst{
-    color:hsla(0, 5%, 75%, 0.75);
-}
-header h1{
+
+header h1 {
 
     color: white;
 }
+
+
+
+
+
+@media (max-width: 1000px) {
+
+    nav ul {
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-self: center;
+
+    }
+
+    @media (max-width: 1000px) {
+
+
+        nav ul {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+            gap: 1vh;
+            width: 90%;
+            margin: 2vw;
+            padding: 0vw;
+            align-self: center;
+            justify-content: center;
+
+        }
+
+
+        nav ul li:first-child {
+
+            grid-column: 1 / span 2;
+            text-align: center;
+            padding-bottom: 2vh;
+            margin: 0;
+        }
+
+
+        nav ul li {
+            width: 100%;
+            text-align: center;
+
+            padding: 0;
+            margin: 0;
+        }
+
+
+        nav ul li button {
+            width: 90%;
+            font-size: 1.2rem;
+            padding: 1rem;
+        }
+    }
+
+    nav ul li button {
+        width: 100%;;
+    }
+
+    #logo {
+        display: flex;
+        padding: 0;
+        height: 5vh;
+
+    }
+
+    .chartContainer{
+        max-height: 10vh;
+    padding: 0;
+
+    }
+
+    #barChart{
+        max-height: 40vh;
+
+    }
+    #titil1{
+        width: 84vw;
+
+
+    }
+
+    header nav ul li img {
+        width: 50vw;
+
+        height: auto;
+    }
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
