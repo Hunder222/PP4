@@ -1,5 +1,4 @@
 
-// TODO save queries as json file
 // TODO add try: when fetching (when theres no nodeJS or sql server)
 
 
@@ -18,7 +17,7 @@ let btnCountries = document.getElementById('btnCountries')
 const allNavButtons = document.querySelectorAll("button")
 
 
-const titel1= document.querySelector('#titil1')
+const titel1 = document.querySelector('#titil1')
 
 const backgroundElement = document.querySelector('.backgroundImg');
 
@@ -105,7 +104,7 @@ function updateCharts(newLabels, newData, chartType) { // chartType: (topSongs, 
 
     // alle knapper sort bg
     const allNavButtons = document.querySelectorAll("button")
-    allNavButtons.forEach(btn=>{
+    allNavButtons.forEach(btn => {
         btn.style.backgroundColor = "#535353"
     })
 
@@ -114,45 +113,33 @@ function updateCharts(newLabels, newData, chartType) { // chartType: (topSongs, 
         chartColor = 'rgba(54, 162, 235, 0.9)'
         btnSongs.style.backgroundColor=chartColor
         titel1.style.backgroundColor=chartColor
-        backgroundElement.style.filter = `hue-rotate(0deg)`
-
-
-
+        backgroundElement.style.filter = `hue-rotate(0deg)`;
     } else if (chartType === 'topGenres') {
         chartTitle = "Top 10 Genres"
         chartColor = 'rgba(75, 192, 192, 0.9)'
         btnGenres.style.backgroundColor=chartColor
         titel1.style.backgroundColor=chartColor
-        backgroundElement.style.filter = `hue-rotate(-45deg)`
-
-
-
+        backgroundElement.style.filter = `hue-rotate(-45deg)`;
     } else if (chartType === 'topArtists') {
         chartTitle = "Top 10 Artists"
         chartColor = 'rgba(153, 102, 255, 0.9)'
         btnArtists.style.backgroundColor=chartColor
         titel1.style.backgroundColor=chartColor
-        backgroundElement.style.filter = `hue-rotate(50deg)`
-
-
-
-
-
-
+        backgroundElement.style.filter = `hue-rotate(50deg)`;
     } else if (chartType === 'topCountries') {
         chartTitle = "Top 10 Countries"
         chartColor = 'rgba(255, 159, 64, 0.9)'
         btnCountries.style.backgroundColor=chartColor
         titel1.style.backgroundColor=chartColor
-        backgroundElement.style.filter = `hue-rotate(180deg)`}
-
+        backgroundElement.style.filter = `hue-rotate(180deg)`;
+    }
 
     // update barChart data and options:
     barChart.data.labels = newLabels
     barChart.data.datasets[0].data = newData
     barChart.data.datasets[0].label = chartTitle
     barChart.data.datasets[0].backgroundColor = chartColor
-    titel1.innerText=chartTitle
+    titel1.innerText = chartTitle
 
     barChart.update()
 
@@ -176,10 +163,12 @@ function updateCharts(newLabels, newData, chartType) { // chartType: (topSongs, 
 }
 
 
-
+// fetches from nodeJS / mysql2 server when connected, otherwise gets date from a local database
+// the local database is updated by server.js, every time it successfully queries from mysql.
 function dataFetcher(chartType) {
 
     const endpoint = '/api/' + chartType
+
 
     fetch(endpoint)
         .then(response => response.json())
@@ -189,7 +178,16 @@ function dataFetcher(chartType) {
 
             updateCharts(chartLabels, chartData, chartType)
         })
-        .catch(error => console.error('Error:', error))
+        .catch(error => {
+            console.log("Fetch to server failed, let's use localDB instead!");
+
+            const localData = localDatabase[chartType]
+
+            const chartLabels = localData.labels
+            const chartData = localData.data
+
+            updateCharts(chartLabels, chartData, chartType)
+        })
 }
 
 // load top songs chart on site init:
