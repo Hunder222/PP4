@@ -85,7 +85,7 @@ li button:active {
 
 
 
-.tableContainer{
+.tableContainer {
     background-color: rgba(83, 83, 83, 0.8);
 
     width: 70vw;
@@ -139,7 +139,6 @@ li button:active {
     display: flex;
     justify-content: center;
     color: hsla(0, 5%, 85%, 0.75)
-
 }
 
 #titil1 {
@@ -169,8 +168,7 @@ header h1 {
 
 
 
-
-
+/*Mobile version*/
 @media (max-width: 1000px) {
 
     nav ul {
@@ -182,8 +180,6 @@ header h1 {
     }
 
     @media (max-width: 1000px) {
-
-
         nav ul {
             display: grid;
 
@@ -224,7 +220,8 @@ header h1 {
     }
 
     nav ul li button {
-        width: 100%;;
+        width: 100%;
+        ;
     }
 
     #logo {
@@ -234,17 +231,18 @@ header h1 {
 
     }
 
-    .chartContainer{
+    .chartContainer {
         max-height: 10vh;
-    padding: 0;
+        padding: 0;
 
     }
 
-    #barChart{
+    #barChart {
         max-height: 40vh;
 
     }
-    #titil1{
+
+    #titil1 {
         width: 84vw;
 
 
@@ -257,20 +255,4 @@ header h1 {
     }
 
 
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}

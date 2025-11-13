@@ -15,7 +15,7 @@ const port = 3005;
 app.use(cors());
 app.use(express.json())
 // subfolder with files it loads on localhost:3000, including html, its styles and client side JS
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname)));
 
 //Host, user, password database setup
 const connection = mysql.createConnection({
@@ -54,7 +54,7 @@ function getChartData(dataFromQuery) {
 // async function because the fetchimg function should not wait for this to finnish before handing data over to the client.
 async function updateLocalDB(chartType, newData) {
 
-    const pathToLocalDB = path.join(__dirname, 'public', 'localDB.js');
+    const pathToLocalDB = path.join(__dirname, 'localDB.js');
 
     // load old database as js obj
     delete require.cache[require.resolve(pathToLocalDB)];

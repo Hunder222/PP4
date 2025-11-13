@@ -27,7 +27,6 @@ const localDatabase = {
     },
     "topGenres": {
         "labels": [
-<<<<<<< HEAD
             "Rock",
             "Latin",
             "Metal",
@@ -50,35 +49,10 @@ const localDatabase = {
             74,
             64,
             61
-=======
-            "É Uma Partida De Futebol",
-            "Now Sports",
-            "A Statistic",
-            "Oprah",
-            "Commercial 1",
-            "The Real Problem",
-            "Commercial 2",
-            "Bossa",
-            "Casinha Feliz",
-            "Mateus Enter"
-        ],
-        "data": [
-            1071,
-            4884,
-            6373,
-            6635,
-            7941,
-            11650,
-            21211,
-            29048,
-            32287,
-            33149
->>>>>>> 9843c0c8ff2be6661b35ea65512f10bde4c781d6
         ]
     },
     "topArtists": {
         "labels": [
-<<<<<<< HEAD
             "Iron Maiden",
             "U2",
             "Led Zeppelin",
@@ -101,30 +75,6 @@ const localDatabase = {
             57,
             56,
             53
-=======
-            "Exodus, Pt. 2",
-            "The Passage",
-            "A Measure of Salvation",
-            "Collaborators",
-            "Unfinished Business",
-            "Exodus, Pt. 1",
-            "Hero",
-            "Torn",
-            "Occupation / Precipice",
-            "Battlestar Galactica: The Story So Far"
-        ],
-        "data": [
-            "1.99",
-            "1.99",
-            "1.99",
-            "1.99",
-            "1.99",
-            "1.99",
-            "1.99",
-            "1.99",
-            "1.99",
-            "1.99"
->>>>>>> 9843c0c8ff2be6661b35ea65512f10bde4c781d6
         ]
     },
     "topCountries": {

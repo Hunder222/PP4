@@ -1,7 +1,4 @@
 
-// TODO add try: when fetching (when theres no nodeJS or sql server)
-
-
 // get chart html containers:
 let barChartCanvas = document.getElementById('barChart').getContext('2d');
 let tableChartContainer = document.getElementById('tableChart');
@@ -20,13 +17,12 @@ const allNavButtons = document.querySelectorAll("button")
 const titel1 = document.querySelector('#titil1')
 
 const backgroundElement = document.querySelector('.backgroundImg');
-const logoElement=document.getElementById("logo")
+const logoElement = document.getElementById("logo")
 
-//  colors
+// chart grid and label color
 const chartLabelgrid = 'hsla(0, 5%, 75%,0.75)'
 
-
-let barChart = new Chart(barChartCanvas,{
+let barChart = new Chart(barChartCanvas, {
     type: 'bar',
     data: {
         labels: [], // edited by updateCharts
@@ -48,24 +44,15 @@ let barChart = new Chart(barChartCanvas,{
                 }
             }
         },
-
-            // ... andre indstillinger ...
-            maintainAspectRatio: false,
-
-            layout: {
-                padding: {
-                    top: 1,
-                    bottom: 1,
-                    left: 50,
-                    right: 10
-                }
-
-
-            },
-
-
-
-
+        maintainAspectRatio: false,
+        layout: {
+            padding: {
+                top: 1,
+                bottom: 1,
+                left: 50,
+                right: 10
+            }
+        },
         plugins: {
             legend: {
                 display: false,
@@ -82,19 +69,17 @@ let barChart = new Chart(barChartCanvas,{
             }
         },
         scales: {
-            // Indstillinger for X-aksen
             x: {
-                // Tilføjet farveindstillinger for grid
                 grid: {
-                    color: chartLabelgrid, // Grid-linjer (let gennemsigtig hvid)
-                    borderColor: chartLabelgrid // Akse linjen
+                    color: chartLabelgrid, // Grid-lines
+                    borderColor: chartLabelgrid // axis lines
                 },
                 ticks: {
                     maxRotation: 45,
                     minRotation: 45,
                     color: chartLabelgrid,
 
-                    // Din eksisterende callback-funktion for lange labels
+                    // long labels gets shorten
                     callback: function (value) {
                         const label = this.getLabelForValue(value);
                         const maxLength = 20;
@@ -107,15 +92,13 @@ let barChart = new Chart(barChartCanvas,{
                     }
                 }
             },
-
-            // Tilføjet Y-aksen for at indstille farver der også
             y: {
                 grid: {
-                    color: chartLabelgrid, // Grid-linjer (let gennemsigtig hvid)
-                    borderColor: chartLabelgrid// Akse linjen
+                    color: chartLabelgrid,
+                    borderColor: chartLabelgrid
                 },
                 ticks: {
-                    color: chartLabelgrid // Labels på Y-aksen
+                    color: chartLabelgrid
                 }
             }
         }
@@ -130,40 +113,41 @@ function updateCharts(newLabels, newData, chartType) { // chartType: (topSongs, 
     let chartTitle;
     let chartColor;
 
-    // alle knapper sort bg
+    // all buttons black bg
     const allNavButtons = document.querySelectorAll("button")
     allNavButtons.forEach(btn => {
         btn.style.backgroundColor = "#535353"
     })
 
+    // change elements, bg and chart styles depending on chart type (chart theme color)
     if (chartType === 'topSongs') {
         chartTitle = "Top 10 Songs"
         chartColor = 'rgba(54, 162, 235, 0.9)'
-        btnSongs.style.backgroundColor=chartColor
-        titel1.style.backgroundColor=chartColor
+        btnSongs.style.backgroundColor = chartColor
+        titel1.style.backgroundColor = chartColor
         backgroundElement.style.filter = `hue-rotate(0deg)`
-        logoElement.style.filter =`hue-rotate(0deg)`;
+        logoElement.style.filter = `hue-rotate(0deg)`;
     } else if (chartType === 'topGenres') {
         chartTitle = "Top 10 Genres"
         chartColor = 'rgba(75, 192, 192, 0.9)'
-        btnGenres.style.backgroundColor=chartColor
-        titel1.style.backgroundColor=chartColor
+        btnGenres.style.backgroundColor = chartColor
+        titel1.style.backgroundColor = chartColor
         backgroundElement.style.filter = `hue-rotate(-45deg)`
-        logoElement.style.filter =`hue-rotate(-45deg)`;
+        logoElement.style.filter = `hue-rotate(-45deg)`;
     } else if (chartType === 'topArtists') {
         chartTitle = "Top 10 Artists"
         chartColor = 'rgba(153, 102, 255, 0.9)'
-        btnArtists.style.backgroundColor=chartColor
-        titel1.style.backgroundColor=chartColor
+        btnArtists.style.backgroundColor = chartColor
+        titel1.style.backgroundColor = chartColor
         backgroundElement.style.filter = `hue-rotate(50deg)`
-        logoElement.style.filter =`hue-rotate(50deg)`;
+        logoElement.style.filter = `hue-rotate(50deg)`;
     } else if (chartType === 'topCountries') {
         chartTitle = "Top 10 Countries"
         chartColor = 'rgba(255, 159, 64, 0.9)'
-        btnCountries.style.backgroundColor=chartColor
-        titel1.style.backgroundColor=chartColor
+        btnCountries.style.backgroundColor = chartColor
+        titel1.style.backgroundColor = chartColor
         backgroundElement.style.filter = `hue-rotate(180deg)`
-        logoElement.style.filter =`hue-rotate(180deg)`;
+        logoElement.style.filter = `hue-rotate(180deg)`;
     }
 
     // update barChart data and options:
@@ -180,24 +164,12 @@ function updateCharts(newLabels, newData, chartType) { // chartType: (topSongs, 
 
 
     if (isMobile) {
-
         barChart.options.layout.padding.left = 20;
         barChart.options.layout.padding.right = 20;
-
-
-
-
 
         barChart.options.scales.y.ticks.maxRotation = 20;
         barChart.options.scales.y.ticks.minRotation = 20;
         barChart.options.scales.y.ticks.autoSkip = false;
-
-
-
-
-
-
-
 
         barChart.options.scales.x.ticks.maxRotation = 45;
         barChart.options.scales.x.ticks.minRotation = 45;
@@ -219,7 +191,6 @@ function updateCharts(newLabels, newData, chartType) { // chartType: (topSongs, 
 
 
     // update tableChart:
-
     tableChartContainer.replaceChildren()
 
     for (let i = 0; i < newLabels.length; i++) {
@@ -243,7 +214,6 @@ function dataFetcher(chartType) {
 
     const endpoint = '/api/' + chartType
 
-
     fetch(endpoint)
         .then(response => response.json())
         .then(data => {
@@ -251,7 +221,7 @@ function dataFetcher(chartType) {
             const chartData = data.queriedData
 
             updateCharts(chartLabels, chartData, chartType)
-        })
+        }) // if fetch to server fails use local database:
         .catch(error => {
             console.log("Fetch to server failed, let's use localDB instead!");
 
@@ -283,19 +253,15 @@ btnArtists.addEventListener('click', () => {
 
 btnCountries.addEventListener('click', () => {
     dataFetcher('topCountries')
-
-
-// resize for mobil
-
-    window.addEventListener('resize', () => {
-
-
-        if (barChart) barChart.update();
-    });
-
-
 });
 
+// resize for mobile
+window.addEventListener('resize', () => {
+    console.log("resizee");
+    
+    barChart.update();
+
+});
 
 
 
