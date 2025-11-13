@@ -22,7 +22,7 @@ const connection = mysql.createConnection({
     host: process.env.host,
     user: process.env.user,
     password: process.env.password,
-    database: 'chinook',
+    database: 'Chinook',
 });
 
 
@@ -65,7 +65,7 @@ async function updateLocalDB(chartType, newData) {
     databaseObj[chartType].data = newData.queriedData;
 
     // add the required code to make it readable as an .js file with an obj to require next time 
-        // null (no replace ¯\_(ツ)_/¯ ), 4 (4 spaces = 1 tab) 
+    // null (no replace ¯\_(ツ)_/¯ ), 4 (4 spaces = 1 tab) 
     const newDatabase = `const localDatabase = ${JSON.stringify(databaseObj, null, 4)};
         if (typeof module !== 'undefined') module.exports = localDatabase;`;
 
@@ -84,93 +84,116 @@ function queueDbUpdate(chartType, newData) {
 }
 
 
-// ____________________ Endpoint queries ____________________
+// ___________________ Endpoint queries ___________________
 // all queries returns 'label' and 'data'. used for chartJS
 
-app.get('/api/topGenres', (req, res) => {
-    connection.query(`
-        SELECT Name AS label, Milliseconds AS data
-        FROM track
-        ORDER BY Milliseconds ASC
-        LIMIT 10
-        `, (error, results) => {
 
+//// fixed version of endpoint '/api/topSongsOLD' (Old version didnt take songs that have more trackIDs)
+app.get("/api/topSongs", (req, res) => {
+    // CONCAT combines 2 varchar datatypes into 1 output
+    const query = `
+    SELECT 
+        CONCAT(t.Name, ' (by ', a.Name,')') AS label, 
+        COUNT(il.InvoiceLineId) AS data
+    FROM invoiceline il
+    INNER JOIN track t USING (TrackID)
+    INNER JOIN genre g USING (GenreID)
+    INNER JOIN album al USING (AlbumId)
+    INNER JOIN artist a USING (ArtistID)
+    WHERE 
+        g.Name NOT IN ('TV Shows','Drama','Comedy','Science Fiction','Action & Adventure','Documentary')
+    GROUP BY
+        t.Name, a.Name
+    ORDER BY data DESC
+    LIMIT 10;
+    `;
+    connection.query(query, (error, results) => {
+        if (error) return res.status(500).json({ error });
+
+        // converts the query output into a object with 2 arrays, label and data, ready for chartJS 
         dataToReturn = getChartData(results)
-
+        
         res.send(dataToReturn)
 
-        queueDbUpdate('topGenres', dataToReturn);
+        // Sends the new data in queue to update the local database (for github pages)
+        queueDbUpdate('topSongs', dataToReturn);
     });
-})
-
-
-app.get('/api/topArtists', (req, res) => {
-
-    connection.query(`
-        SELECT Name AS label, UnitPrice AS data
-        FROM track
-        ORDER BY UnitPrice DESC
-        LIMIT 10
-        `, (error, results) => {
-
-        dataToReturn = getChartData(results)
-        res.send(dataToReturn)
-
-        queueDbUpdate('topArtists', dataToReturn);
-    });
-})
+});
 
 
 // __END__ #####################__Elliot__##############################
 // _START_ #####################__Jazmin__##############################
 
+
+//// not right output, doesnt take into account that many songs have more trackIDs, even when same songname and artist.
 // ----------------- TOP 10 SONGS -----------------
-app.get("/api/top10songs", (req, res) => {
+app.get("/api/topSongsOLD", (req, res) => {
     const query = `
-        SELECT Name AS song_name, Milliseconds, Bytes, UnitPrice
-        FROM Track
-        WHERE MediaTypeId IN (1, 2, 3) -- excludes non-music (like TV or video)
-        ORDER BY UnitPrice DESC
-        LIMIT 10;
-    `;
+    SELECT 
+      t.Name AS label,
+      ar.Name AS Artist,
+      g.Name AS Genre,
+      SUM(il.Quantity) AS data
+    FROM invoiceline il
+    JOIN track t   ON il.TrackId = t.TrackId
+    JOIN album al  ON t.AlbumId = al.AlbumId
+    JOIN artist ar ON al.ArtistId = ar.ArtistId
+    JOIN genre g   ON t.GenreId = g.GenreId
+    WHERE g.Name NOT IN ('TV Shows','Drama','Comedy','Science Fiction','Action & Adventure','Documentary')
+      AND t.MediaTypeId IN (SELECT MediaTypeId FROM mediatype WHERE Name LIKE '%audio%')
+    GROUP BY t.TrackId
+    ORDER BY data DESC
+    LIMIT 10;
+  `;
+
+
     connection.query(query, (error, results) => {
-        if (error) return res.status(500).json({ error: error.message });
-        res.json(results);
+        if (error) return res.status(500).json({ error });
+        res.send(results)
     });
 });
 
 
 // ----------------- TOP 10 GENRES -----------------
-app.get("/api/top10genres", (req, res) => {
+app.get("/api/topGenres", (req, res) => {
     const query = `
-        SELECT g.Name AS genre_name, COUNT(t.TrackId) AS total_songs
+        SELECT g.Name AS label, COUNT(t.TrackId) AS data
         FROM Track t
         JOIN Genre g ON t.GenreId = g.GenreId
         GROUP BY g.Name
-        ORDER BY total_songs DESC
+        ORDER BY data DESC
         LIMIT 10;
     `;
+
     connection.query(query, (error, results) => {
         if (error) return res.status(500).json({ error: error.message });
-        res.json(results);
+
+        dataToReturn = getChartData(results)
+        res.send(dataToReturn)
+
+        queueDbUpdate('topGenres', dataToReturn);
     });
 });
 
 
 // ----------------- TOP 10 ARTISTS -----------------
-app.get("/api/top10artists", (req, res) => {
+app.get("/api/topArtists", (req, res) => {
     const query = `
-        SELECT a.Name AS artist_name, COUNT(t.TrackId) AS total_songs
+        SELECT a.Name AS label, COUNT(t.TrackId) AS data
         FROM Track t
         JOIN Album al ON t.AlbumId = al.AlbumId
         JOIN Artist a ON al.ArtistId = a.ArtistId
         GROUP BY a.Name
-        ORDER BY total_songs DESC
+        ORDER BY data DESC
         LIMIT 10;
     `;
     connection.query(query, (error, results) => {
         if (error) return res.status(500).json({ error: error.message });
-        res.json(results);
+
+        dataToReturn = getChartData(results)
+        res.send(dataToReturn)
+
+        queueDbUpdate('topArtists', dataToReturn);
     });
 });
 
@@ -199,35 +222,6 @@ app.get("/api/topCountries", (req, res) => {
 });
 
 
-app.get("/api/topSongs", (req, res) => {
-    const query = `
-    SELECT 
-      t.Name AS label,
-      ar.Name AS Artist,
-      g.Name AS Genre,
-      SUM(il.Quantity) AS data
-    FROM invoiceline il
-    JOIN track t   ON il.TrackId = t.TrackId
-    JOIN album al  ON t.AlbumId = al.AlbumId
-    JOIN artist ar ON al.ArtistId = ar.ArtistId
-    JOIN genre g   ON t.GenreId = g.GenreId
-    WHERE g.Name NOT IN ('TV Shows','Drama','Comedy','Science Fiction','Action & Adventure','Documentary')
-      AND t.MediaTypeId IN (SELECT MediaTypeId FROM mediatype WHERE Name LIKE '%audio%')
-    GROUP BY t.TrackId
-    ORDER BY data DESC
-    LIMIT 10;
-  `;
-
-
-    connection.query(query, (error, results) => {
-        if (error) return res.status(500).json({ error });
-
-        dataToReturn = getChartData(results)
-        res.send(dataToReturn)
-
-        queueDbUpdate('topSongs', dataToReturn);
-    });
-});
 
 
 // __END__ #####################__Jazmin__##############################

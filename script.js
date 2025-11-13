@@ -3,7 +3,7 @@
 /// ##### 
 /// ##### 
 /// ##### 
-/// ##### THIS SCRIPT IS REPLACED BY server.js!!!
+/// ##### THIS SCRIPT IS REPLACED BY 'server.js'!!!
 /// ##### 
 /// ##### 
 /// ##### 
